@@ -10,6 +10,8 @@ public:
 	virtual void Update() override;
 	int getXDir();
 	int getYDir();
+	void despawnPrep();
+	
 
 protected:
 	
@@ -21,6 +23,7 @@ private:
 	int m_currentMovementX;
 	int m_currentMovementY;
 	*/
+	
 	int m_directionX;
 	int m_directionY;
 };

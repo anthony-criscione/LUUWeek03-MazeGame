@@ -11,7 +11,7 @@ Pellet::Pellet(int x, int y, int dirX, int dirY)
 
 void Pellet::Draw()
 {
-	std::cout << '\x07';
+	std::cout << '\xf8';
 }
 
 void Pellet::Update()
@@ -21,3 +21,4 @@ void Pellet::Update()
 
 int Pellet::getXDir() { return m_directionX; }
 int Pellet::getYDir() { return m_directionY; }
+void Pellet::despawnPrep() { this->m_IsActive = false; }

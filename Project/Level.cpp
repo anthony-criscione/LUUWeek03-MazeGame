@@ -240,47 +240,57 @@ int Level::GetIndexFromCoordinates(int x, int y)
 PlacableActor* Level::UpdateActors(int x, int y)
 {
 	PlacableActor* collidedActor = nullptr;
-
-	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
+	vector<int> removeIndecies;
+	for (int i = 0; i < m_pActors.size(); i++)
 	{
-		(*actor)->Update(); // Update all actors
+		PlacableActor *actor = m_pActors[i];
+		(actor)->Update(); // Update all actors
 
-		if (dynamic_cast<Turret*>(*actor) != nullptr) {
-			Turret* thisTurret = dynamic_cast<Turret*>(*actor);
+		if (dynamic_cast<Turret*>(actor) != nullptr) {
+			Turret* thisTurret = dynamic_cast<Turret*>(actor);
 			Point* spawnPoint = nullptr;
 			if (thisTurret->canFire()) {
 				
 				thisTurret->Fire(spawnPoint);
 				//if (spawnPoint != nullptr) {
 					//int checkEntry = GetIndexFromCoordinates(spawnPoint->x, spawnPoint->y); // Will maybe cause problems with turrets on the edges of map
-					//exit(0);
 					m_pActors.push_back(new Pellet(thisTurret->GetXPosition(), thisTurret->GetYPosition(), thisTurret->getXFire(), thisTurret->getYFire()));
 					//delete spawnPoint;
 				//}
 			}
 		}
-		else if (dynamic_cast<Pellet*>(*actor) != nullptr) {
-			Pellet* thisPellet = dynamic_cast<Pellet*>(*actor);
+		else if (dynamic_cast<Pellet*>(actor) != nullptr) {
+			Pellet* thisPellet = dynamic_cast<Pellet*>(actor);
 			if (thisPellet->GetXPosition() < 0 || thisPellet->GetYPosition() < 0 || thisPellet->GetXPosition() >= this->m_width || thisPellet->GetYPosition() >= this->m_height) {
 				//std::vector<PlacableActor*>::iterator position = std::find(m_pActors.begin(), m_pActors.end(), actor);
 				//if (position != m_pActors.end())
-					m_pActors.erase(actor);
+				thisPellet->despawnPrep();
 			}
 			else if (not IsSpace(thisPellet->GetXPosition(), thisPellet->GetYPosition())) {
 				//std::vector<PlacableActor*>::iterator position = std::find(m_pActors.begin(), m_pActors.end(), actor);
 				//if (position != m_pActors.end())
-					m_pActors.erase(actor);
+				thisPellet->despawnPrep();
 			}
+			
 			//else
 		}
 
-		if (x == (*actor)->GetXPosition() && y == (*actor)->GetYPosition())
+		if (x == (actor)->GetXPosition() && y == (actor)->GetYPosition() && actor->IsActive())
 		{
 			// should only be able to collide with one actor
 			assert(collidedActor == nullptr);
-			collidedActor = (*actor);
+			collidedActor = (actor);
 		}
 	}
 
+	for (int i = m_pActors.size() - 1; i >= 0; i--)
+	{
+		PlacableActor* actor = m_pActors[i];
+		if (actor->IsActive()) continue;
+		else if (dynamic_cast<Pellet*>(actor) != nullptr) {
+			m_pActors.erase(m_pActors.begin() + i);
+		}
+	}
+	
 	return collidedActor;
 }
