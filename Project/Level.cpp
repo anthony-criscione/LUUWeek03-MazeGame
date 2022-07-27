@@ -183,15 +183,15 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '1':
-				m_pActors.push_back(new Turret(x, y, -1, -1));
+				m_pActors.push_back(new Turret(x, y, -1, 1));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '2':
-				m_pActors.push_back(new Turret(x, y, 0, -1));
+				m_pActors.push_back(new Turret(x, y, 0, 1));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '3':
-				m_pActors.push_back(new Turret(x, y, 1, -1));
+				m_pActors.push_back(new Turret(x, y, 1, 1));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '4':
@@ -203,19 +203,19 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '6':
-				m_pActors.push_back(new Turret(x, y, 0, 1));
+				m_pActors.push_back(new Turret(x, y, 1, 0));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '7':
-				m_pActors.push_back(new Turret(x, y, -1, 1));
+				m_pActors.push_back(new Turret(x, y, -1, -1));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '8':
-				m_pActors.push_back(new Turret(x, y, 0, 1));
+				m_pActors.push_back(new Turret(x, y, 0, -1));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case '9':
-				m_pActors.push_back(new Turret(x, y, 1, 1));
+				m_pActors.push_back(new Turret(x, y, 1, -1));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 			case ' ':

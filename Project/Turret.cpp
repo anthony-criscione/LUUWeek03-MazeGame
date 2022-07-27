@@ -11,13 +11,13 @@ Turret::Turret(int x, int y, int dirX, int dirY, int period)
 {
 	switch ((1 + dirX) + (3 * (1 + dirY))) {
 	  case 0:
-		  outChar = '\xc0';
+		  outChar = '\xda';
 		  break;
 	  case 1:
-		  outChar = '\xc1';
+		  outChar = '\xc2';
 		  break;
 	  case 2:
-		  outChar = '\xd9';
+		  outChar = '\xbf';
 		  break;
 	  case 3:
 		  outChar = '\xc3';
@@ -29,13 +29,13 @@ Turret::Turret(int x, int y, int dirX, int dirY, int period)
 		  outChar = '\xb4';
 		  break;
 	  case 6:
-		  outChar = '\xda';
+		  outChar = '\xc0';
 		  break;
 	  case 7:
-		  outChar = '\xc2';
+		  outChar = '\xc1';
 		  break;
 	  case 8:
-		  outChar = '\xbf';
+		  outChar = '\xd9';
 		  break;
 	  default:
 		  outChar = '?';
