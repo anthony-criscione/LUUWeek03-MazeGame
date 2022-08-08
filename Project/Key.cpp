@@ -5,6 +5,7 @@
 
 void Key::Draw()
 {
+	// Third Relink
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(console, (int)m_color);
 
