@@ -3,6 +3,7 @@
 
 class Door : public PlacableActor
 {
+	// Ensure Git linked properly
 public:
 	Door(int x, int y, ActorColor color, ActorColor closedColor);
 	virtual void Draw() override;

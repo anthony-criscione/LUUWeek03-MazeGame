@@ -1,2 +1,24 @@
-﻿  Turret.cpp
-  Project.vcxproj -> C:\Users\acriscione\source\repos\MazeGame\x64\Debug\Project.exe
+﻿  AudioManager.cpp
+  Door.cpp
+  Enemy.cpp
+  Game.cpp
+  GameplayState.cpp
+  Goal.cpp
+  HighScoreState.cpp
+  Key.cpp
+  Level.cpp
+C:\Users\acriscione\source\repos\LUUWeek03-MazeGame\Project\Level.cpp(286,2): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  LoseState.cpp
+  MainMenuState.cpp
+  Money.cpp
+  Pellet.cpp
+  PlacableActor.cpp
+  Player.cpp
+  Project.cpp
+  SettingsState.cpp
+  StateMachineExampleGame.cpp
+  Turret.cpp
+  WinState.cpp
+  Generating Code...
+  LINK : C:\Users\acriscione\source\repos\LUUWeek03-MazeGame\x64\Debug\Project.exe not found or not built by the last incremental link; performing full link
+  Project.vcxproj -> C:\Users\acriscione\source\repos\LUUWeek03-MazeGame\x64\Debug\Project.exe
