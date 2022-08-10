@@ -5,7 +5,7 @@ PlacableActor::PlacableActor(int x, int y, ActorColor color)
 	, m_IsActive(true)
 	, m_color(color)
 {
-
+	thisActor = this;
 }
 
 PlacableActor::~PlacableActor()

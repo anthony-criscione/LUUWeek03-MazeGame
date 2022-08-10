@@ -1,5 +1,7 @@
 #pragma once
 #include "PlacableActor.h"
+#include "Collidable.h"
+
 class Pellet : public PlacableActor
 {
 public:
@@ -12,7 +14,8 @@ public:
 	int getYDir();
 	void despawnPrep();
 	
-
+	virtual bool collisionAct(Collidable* othActor) override;
+	virtual bool collisionGeo() override;
 protected:
 	
 private:

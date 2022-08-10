@@ -237,14 +237,24 @@ int Level::GetIndexFromCoordinates(int x, int y)
 }
 
 // Updates all actors and returns a colliding actor if there is one
-PlacableActor* Level::UpdateActors(int x, int y)
+PlacableActor* Level::UpdateActors(int x, int y, Player* thisPlayer)
 {
 	PlacableActor* collidedActor = nullptr;
 	vector<int> removeIndecies;
+	int oldX = thisPlayer->GetXPosition(), oldY = thisPlayer->GetYPosition();
+	if (not IsWall(x, y))
+		thisPlayer->SetPosition(x, y);
 	for (int i = 0; i < m_pActors.size(); i++)
 	{
 		PlacableActor *actor = m_pActors[i];
 		(actor)->Update(); // Update all actors
+
+		if (x == (actor)->GetXPosition() && y == (actor)->GetYPosition() && actor->IsActive()) {
+			thisPlayer->collisionAct(actor);
+			actor->collisionAct(thisPlayer);
+		}
+		
+		if (IsWall(actor->GetXPosition(), actor->GetYPosition())) actor->collisionGeo();
 
 		if (dynamic_cast<Turret*>(actor) != nullptr) {
 			Turret* thisTurret = dynamic_cast<Turret*>(actor);
@@ -259,7 +269,7 @@ PlacableActor* Level::UpdateActors(int x, int y)
 				//}
 			}
 		}
-		else if (dynamic_cast<Pellet*>(actor) != nullptr) {
+		/*else if (dynamic_cast<Pellet*>(actor) != nullptr) {
 			Pellet* thisPellet = dynamic_cast<Pellet*>(actor);
 			if (thisPellet->GetXPosition() < 0 || thisPellet->GetYPosition() < 0 || thisPellet->GetXPosition() >= this->m_width || thisPellet->GetYPosition() >= this->m_height) {
 				//std::vector<PlacableActor*>::iterator position = std::find(m_pActors.begin(), m_pActors.end(), actor);
@@ -271,16 +281,21 @@ PlacableActor* Level::UpdateActors(int x, int y)
 				//if (position != m_pActors.end())
 				thisPellet->despawnPrep();
 			}
-			
+			*/
 			//else
-		}
+		    
+		
 
+		
+
+		/*
 		if (x == (actor)->GetXPosition() && y == (actor)->GetYPosition() && actor->IsActive())
 		{
 			// should only be able to collide with one actor
 			assert(collidedActor == nullptr);
 			collidedActor = (actor);
 		}
+		*/
 	}
 
 	for (int i = m_pActors.size() - 1; i >= 0; i--)

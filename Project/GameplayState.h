@@ -31,6 +31,8 @@ public:
 	virtual void Enter() override;
 	virtual bool Update(bool processInput = true) override;
 	virtual void Draw() override;
+	void beatLevel() { m_beatLevel = true; }
+	StateMachineExampleGame* getState() { return m_pOwner; }
 
 private:
 	void HandleCollision(int newPlayerX, int newPlayerY);

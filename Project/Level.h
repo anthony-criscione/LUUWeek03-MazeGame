@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "Player.h"
 
 class PlacableActor;
 
@@ -18,7 +19,7 @@ public:
 
 	bool Load(std::string levelName, int* playerX, int* playerY);
 	void Draw();
-	PlacableActor* UpdateActors(int x, int y);
+	PlacableActor* UpdateActors(int x, int y, Player* thisPlayer);
 
 	bool IsSpace(int x, int y);
 	bool IsWall(int x, int y);

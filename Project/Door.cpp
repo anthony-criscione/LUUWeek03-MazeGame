@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include "Door.h"
+#include "Player.h"
 
 Door::Door(int x, int y, ActorColor color, ActorColor closedColor)
 	: PlacableActor(x, y, color)
@@ -23,4 +24,15 @@ void Door::Draw()
 	}
 	std::cout << "|";
 	SetConsoleTextAttribute(console, (int)ActorColor::Regular);
+}
+
+bool Door::collisionAct(Collidable* othActor) {
+	if (othActor->thisActor->GetType() != ActorType::Player) return false;
+	else {
+		/*Player* tmpPlayer = dynamic_cast<Player*>(othActor->thisActor);
+		if (tmpPlayer->HasKey()) {
+			this->Open();
+		}*/
+		return false;
+	}
 }

@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include <iostream>
+#include "Player.h"
 
 Enemy::Enemy(int x, int y, int deltaX, int deltaY)
 	: PlacableActor(x, y)
@@ -54,3 +55,14 @@ void Enemy::UpdateDirection(int& current, int& direction, int& movement)
 	}
 }
 
+bool Enemy::collisionAct(Collidable* othActor) {
+	if (othActor->thisActor->GetType() == ActorType::Enemy ||
+		othActor->thisActor->GetType() == ActorType::Key ||
+		othActor->thisActor->GetType() == ActorType::Goal ||
+		othActor->thisActor->GetType() == ActorType::Money) return true;
+	else if (othActor->thisActor->GetType() != ActorType::Player) return false; // Should do a special door check 
+	else {
+		this->setActive(false);
+		return true;
+	}
+}

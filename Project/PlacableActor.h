@@ -1,5 +1,6 @@
 #pragma once
 #include "Point.h"
+#include "Collidable.h"
 
 enum class ActorColor
 {
@@ -23,7 +24,7 @@ enum class ActorType
 	Immobile,
 };
 
-class PlacableActor
+class PlacableActor : public Collidable
 {
 public:
 	PlacableActor(int x, int y, ActorColor color = ActorColor::Regular);
@@ -34,6 +35,7 @@ public:
 	int* GetXPositionPointer();
 	int* GetYPositionPointer();
 	void SetPosition(int x, int y);
+	void setActive(bool inAct) { m_IsActive = inAct; }
 
 	ActorColor GetColor() { return m_color; }
 
@@ -47,6 +49,9 @@ public:
 	{
 
 	}
+
+	virtual bool collisionAct(Collidable* otherAct) = 0;
+	virtual bool collisionGeo() { return false; }
 
 protected:
 	Point* m_pPosition;

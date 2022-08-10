@@ -1,5 +1,6 @@
 #pragma once
 #include "PlacableActor.h"
+#include "Collidable.h"
 
 class Key;
 
@@ -15,14 +16,19 @@ public:
 	void DropKey();
 	Key* GetKey() { return m_pCurrentKey; }
 
+	bool hasWon = false;
+
 	void AddMoney(int money) { m_money += money; }
 	int GetMoney() { return m_money; }
 
 	int GetLives() { return m_lives; }
 	void DecrementLives() { m_lives--; }
 
+	virtual bool collisionAct(Collidable* othActor) override;
+
 	virtual ActorType GetType() override { return ActorType::Player; }
 	virtual void Draw() override;
+
 private:
 	Key* m_pCurrentKey;
 	int m_money;

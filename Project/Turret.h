@@ -13,6 +13,7 @@ public:
 	int getXFire();
 	int getYFire();
 
+	bool collisionAct(Collidable* otherAct) { return false; }
 
 protected:
 	//void InitDirection();

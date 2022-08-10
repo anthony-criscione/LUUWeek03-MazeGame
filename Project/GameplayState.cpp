@@ -146,8 +146,10 @@ bool GameplayState::Update(bool processInput)
 
 void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 {
-	PlacableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
-	if (collidedActor != nullptr && collidedActor->IsActive())
+
+
+	PlacableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY, &m_player);
+	/*if (collidedActor != nullptr && collidedActor->IsActive())
 	{
 		switch (collidedActor->GetType())
 		{
@@ -245,6 +247,19 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 	{
 		// wall collision, do nothing
 	}
+	*/
+	if (m_player.hasWon == true) {
+		m_beatLevel = true;
+		m_player.hasWon = false;
+	}
+    else if (m_player.GetLives() < 0)
+	{
+		//TODO: Go to game over screen
+		AudioManager::GetInstance()->PlayLoseSound();
+		m_pOwner->LoadScene(StateMachineExampleGame::SceneName::Lose);
+	}
+
+	
 }
 
 void GameplayState::Draw()

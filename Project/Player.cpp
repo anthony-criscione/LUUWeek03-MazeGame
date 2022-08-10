@@ -3,6 +3,11 @@
 #include "Player.h"
 #include "Key.h"
 #include "AudioManager.h"
+#include "Money.h"
+#include "Enemy.h"
+#include "Goal.h"
+#include "Door.h"
+#include "Pellet.h"
 
 using namespace std;
 
@@ -13,6 +18,7 @@ Player::Player()
 	, m_pCurrentKey(nullptr)
 	, m_money(0)
 	, m_lives(kStartingNumberOfLives)
+	, hasWon(false)
 {
 
 }
@@ -54,4 +60,78 @@ void Player::DropKey()
 void Player::Draw()
 {
 	cout << "@";
+}
+
+bool Player::collisionAct(Collidable* othActor) {
+
+	switch (othActor->thisActor->GetType()) {
+	case ActorType::Door: {
+		Door* collidedDoor = dynamic_cast<Door*>(othActor);
+		if (!collidedDoor->IsOpen())
+		{
+			if (this->HasKey(collidedDoor->GetColor()))
+			{
+				collidedDoor->Open();
+				collidedDoor->Remove();
+				this->UseKey();
+				AudioManager::GetInstance()->PlayDoorOpenSound();
+				return true;
+			}
+			else
+			{
+				AudioManager::GetInstance()->PlayDoorClosedSound();
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
+		break;
+	}
+	case ActorType::Enemy: {
+		if (dynamic_cast<Enemy*>(othActor) != nullptr) {
+			Enemy* collidedEnemy = dynamic_cast<Enemy*>(othActor);
+			AudioManager::GetInstance()->PlayLoseLivesSound();
+			collidedEnemy->Remove();
+		}
+		else if (dynamic_cast<Pellet*>(othActor) != nullptr) {
+			Pellet* collidedEnemy = dynamic_cast<Pellet*>(othActor);
+			AudioManager::GetInstance()->PlayLoseLivesSound();
+			collidedEnemy->Remove();
+		}
+		this->DecrementLives();
+		return true;
+		break;
+	}
+	case ActorType::Goal: {
+		Goal* collidedGoal = dynamic_cast<Goal*>(othActor);
+		collidedGoal->Remove();
+		this->hasWon = true;
+		//thisGame->beatLevel();
+		return true;
+		break;
+	}
+	case ActorType::Key: {
+		if (not this->HasKey()) this->PickupKey(dynamic_cast<Key*>(othActor));
+		dynamic_cast<Key*>(othActor)->Remove();
+		return true;
+		break;
+	}
+	case ActorType::Money: {
+		AudioManager::GetInstance()->PlayMoneySound();
+		this->AddMoney(dynamic_cast<Money*>(othActor)->GetWorth());
+		dynamic_cast<Money*>(othActor)->Remove();
+		return true;
+		break;
+	}
+	case ActorType::Immobile: {
+		return false;
+		break;
+	}
+	default: {
+		// Unhandled collision
+		return false;
+	}
+	}
 }

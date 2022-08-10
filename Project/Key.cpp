@@ -2,6 +2,8 @@
 #include <windows.h>
 
 #include "Key.h"
+#include "Collidable.h"
+#include "Player.h"
 
 void Key::Draw()
 {
@@ -11,4 +13,9 @@ void Key::Draw()
 
 	std::cout << "+";
 	SetConsoleTextAttribute(console, (int)ActorColor::Regular);
+}
+
+bool Key::collisionAct(Collidable* othActor) {
+	return false;
+	
 }
